@@ -1,0 +1,25 @@
+Name,Email,Company,Industry,Phone,Website,Employees,Revenue,Location,Status,Last_Contact,Notes
+John Anderson,john.anderson@techcorp.com,TechCorp Solutions,Technology,+1-555-0123,www.techcorp.com,250-500,$10M-50M,San Francisco,CA,Lead,2024-03-10,Interested in AI sales automation
+Sarah Miller,sarah.miller@financialservices.com,Financial Services Inc.,Finance,+1-555-0124,www.finserv.com,1000-5000,$50M-100M,New York,NY,Qualified,2024-03-08,Needs proposal for enterprise solution
+Michael Chen,michael.chen@healthcare.com,HealthTech Solutions,Healthcare,+1-555-0125,www.healthtech.com,50-100,$1M-10M,Boston,MA,Contacted,2024-03-12,Follow up next week
+Emily Rodriguez,emily.rodriguez@retail.com,RetailMax Inc.,Retail,+1-555-0126,www.retailmax.com,5000-10000,$100M+,Chicago,IL,Lead,2024-03-11,Large retail chain interested in CRM integration
+David Kim,david.kim@manufacturing.com,Manufacturing Pro,Manufacturing,+1-555-0127,www.manufacturing-pro.com,100-250,$10M-50M,Detroit,MI,Qualified,2024-03-09,Production efficiency improvement needed
+Lisa Thompson,lisa.thompson@consulting.com,Consulting Group,Professional Services,+1-555-0128,www.consulting-group.com,10-50,$1M-10M,Seattle,WA,Lead,2024-03-13,Consulting firm looking for AI tools
+James Wilson,james.wilson@education.com,EduTech Solutions,Education,+1-555-0129,www.edutech.com,250-500,$10M-50M,Austin,TX,Contacted,2024-03-07,K-12 school district technology
+Maria Garcia,maria.garcia@realestate.com,RealEstate Plus,Real Estate,+1-555-0130,www.realestate-plus.com,50-100,$1M-10M,Miami,FL,Qualified,2024-03-14,Commercial real estate brokerage
+Robert Brown,robert.brown@logistics.com,Logistics Hub,Transportation,+1-555-0131,www.logistics-hub.com,1000-5000,$50M-100M,Atlanta,GA,Lead,2024-03-06,Supply chain optimization needs
+Jennifer Davis,jennifer.davis@marketing.com,Marketing Agency,Marketing,+1-555-0132,www.marketing-agency.com,10-50,$1M-10M,Denver,CO,Contacted,2024-03-15,Digital marketing services firm
+Christopher Lee,chris.lee@construction.com,ConstructCo,Construction,+1-555-0133,www.constructco.com,500-1000,$10M-50M,Phoenix,AZ,Qualified,2024-03-05,Commercial construction company
+Amanda White,amanda.white@legal.com,Legal Services,Legal,+1-555-0134,www.legal-services.com,100-250,$10M-50M,Portland,OR,Lead,2024-03-16,Law firm practice management
+Kevin Johnson,kevin.johnson@energy.com,Energy Solutions,Energy,+1-555-0135,www.energy-solutions.com,250-500,$10M-50M,Houston,TX,Qualified,2024-03-04,Renewable energy consulting
+Nicole Martinez,nicole.martinez@nonprofit.com,NonProfit Org,Non-Profit,+1-555-0136,www.nonprofit.org,50-100,$1M-10M,Washington,DC,Contacted,2024-03-17,Charitable organization
+Daniel Taylor,daniel.taylor@automotive.com,AutoTech,Automotive,+1-555-0137,www.autotech.com,1000-5000,$50M-100M,Detroit,MI,Lead,2024-03-03,Electric vehicle technology
+Rachel Green,rachel.green@pharma.com,PharmaCorp,Pharmaceuticals,+1-555-0138,www.pharma.com,5000-10000,$100M+,Boston,MA,Qualified,2024-03-18,Pharmaceutical research company
+Thomas Hall,thomas.hall@insurance.com,Insurance Pro,Insurance,+1-555-0139,www.insurance-pro.com,250-500,$10M-50M,Philadelphia,PA,Contacted,2024-03-02,Insurance brokerage firm
+Jessica Allen,jessica.allen@startup.com,TechStart,Technology,+1-555-0140,www.techstart.com,10-50,$1M-10M,San Francisco,CA,Lead,2024-03-19,Early stage startup
+Matthew Clark,matthew.clark@telecom.com,Telecom Plus,Telecommunications,+1-555-0141,www.telecom-plus.com,1000-5000,$50M-100M,Dallas,TX,Qualified,2024-03-01,Telecommunications provider
+Sophie Turner,sophie.turner@fintech.com,FinTech Innovations,Finance,+1-555-0142,www.fintech-innovations.com,50-100,$1M-10M,New York,NY,Contacted,2024-03-20,Financial technology startup
+Oliver Harris,oliver.harris@government.com,GovTech,Technology,+1-555-0143,www.govtech.com,500-1000,$10M-50M,Washington,DC,Lead,2024-02-28,Government technology solutions
+Isabella King,isabella.king@biotech.com,BioTech Solutions,Healthcare,+1-555-0144,www.biotech-solutions.com,250-500,$10M-50M,San Diego,CA,Qualified,2024-02-27,Biotechnology research
+Liam Wright,liam.wright@agriculture.com,AgriTech,Agriculture,+1-555-0145,www.agritech.com,100-250,$1M-10M,Des Moines,IA,Contacted,2024-02-26,Agricultural technology
+Mia Scott,mia.scott@hospitality.com,Hospitality Group,Hospitality,+1-555-0146,www.hospitality-group.com,1000-5000,$50M-100M,Orlando,FL,Lead,2024-02-25,Hotel and restaurant management

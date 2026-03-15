@@ -1,0 +1,24 @@
+[
+  {
+    "draft_id": "tech_company_draft",
+    "content": "Hi Michael, I noticed your company is in the healthcare technology space. AgentIQ specializes in helping healthcare tech companies streamline their sales process. Our AI-powered platform can analyze your leads and generate personalized proposals, typically saving 20+ hours per week. Would you be interested in learning how we helped similar companies achieve 35% revenue growth? Best, Alex",
+    "title": "Healthcare Tech Outreach",
+    "lead_data": {
+      "name": "Michael Chen",
+      "company": "HealthTech Solutions",
+      "industry": "Healthcare",
+      "needs": "Production efficiency improvement needed"
+    }
+  },
+  {
+    "draft_id": "retail_draft",
+    "content": "Dear Emily, As RetailMax continues to expand, managing sales leads efficiently becomes crucial. AgentIQ offers enterprise-grade AI solutions specifically designed for large retail chains. Our platform integrates seamlessly with existing CRM systems and has helped retailers like you increase conversion rates by 30%. Can we schedule a 30-minute call to discuss your specific requirements? Regards, Jordan",
+    "title": "Retail Enterprise Proposal",
+    "lead_data": {
+      "name": "Emily Rodriguez",
+      "company": "RetailMax Inc.",
+      "industry": "Retail",
+      "needs": "Large retail chain interested in CRM integration"
+    }
+  }
+]

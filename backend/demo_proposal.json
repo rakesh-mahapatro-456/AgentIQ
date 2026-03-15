@@ -1,0 +1,11 @@
+{
+  "draft_id": "demo_comprehensive_proposal",
+  "content": "Dear John Anderson, I hope this message finds you well. Having researched TechCorp Solutions position in the technology sector, I understand you are looking for innovative ways to enhance your sales automation processes. AgentIQs AI-powered platform is specifically designed for technology companies like yours, offering advanced lead analysis with 87% accuracy and automated proposal generation. Our clients in the tech sector typically experience a 30-45% increase in qualified leads and save 20+ hours weekly through intelligent automation. We have successfully helped similar technology companies scale their sales operations while maintaining personalized customer relationships. I would welcome the opportunity to demonstrate how AgentIQ can address TechCorps specific sales challenges and contribute to your growth objectives. Would you be available for a brief 20-minute demonstration next week? Best regards, Sarah",
+  "title": "Comprehensive Tech Sector Proposal",
+  "lead_data": {
+    "name": "John Anderson",
+    "company": "TechCorp Solutions",
+    "industry": "Technology",
+    "needs": "Interested in AI sales automation"
+  }
+}
