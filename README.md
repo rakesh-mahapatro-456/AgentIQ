@@ -1,135 +1,221 @@
-# AgentIQ 🚀
+<div align="center">
 
-### The Agentic AI Workforce for Salesforce-Native Sales Automation
+```
+ █████╗  ██████╗ ███████╗███╗   ██╗████████╗██╗ ██████╗
+██╔══██╗██╔════╝ ██╔════╝████╗  ██║╚══██╔══╝██║██╔═══██╗
+███████║██║  ███╗█████╗  ██╔██╗ ██║   ██║   ██║██║   ██║
+██╔══██║██║   ██║██╔══╝  ██║╚██╗██║   ██║   ██║██║▄▄ ██║
+██║  ██║╚██████╔╝███████╗██║ ╚████║   ██║   ██║╚██████╔╝
+╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝ ╚══▀▀═╝
+```
 
-**AgentIQ** is an enterprise-grade AI platform built for the **NeuraX 2.0 National Level Hackathon**. It transforms how sales teams research, draft, and manage proposals by combining **LangGraph** multi-agent orchestration with live **Salesforce** CRM data and a private **RAG Knowledge Base**.
+**Agentic AI Workforce for Salesforce-Native Sales Automation**
+
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)
+![LangGraph](https://img.shields.io/badge/LangGraph-000000?style=flat-square&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js_16-000000?style=flat-square&logo=next.js&logoColor=white)
+![Python](https://img.shields.io/badge/Python_3.13+-3776AB?style=flat-square&logo=python&logoColor=white)
+
+*Built for **NeuraX 2.0 — National Level Hackathon** · Team Techies*
+
+</div>
 
 ---
 
-## 🏗️ System Architecture
+## `$ cat overview.txt`
 
-### High-Level Project Architecture
+AgentIQ automates the entire sales proposal lifecycle using a **LangGraph ReAct agent** that reasons across three registered tools — CRM Tool (Salesforce), RAG Tool (Supabase vector search), and Proposal Tool (FPDF2 PDF generation). The agent reasons, calls tools, validates context, and generates a personalized PDF exported via `/api/agent/export-pdf`.
 
-> A bird's-eye view of the AgentIQ ecosystem — from frontend to backend services.
-
-![Project Architecture](https://res.cloudinary.com/dqz5xgr5v/image/upload/v1773649822/Gemini_Generated_Image_10lau10lau10lau1_pbliy3.png)
-
-### Frontend ↔ Backend Interaction
-
-> Detailed mapping of the Next.js to FastAPI communication flow, including SSE streaming, OAuth, and vector search.
-
-![Frontend-Backend Architecture](https://res.cloudinary.com/dqz5xgr5v/image/upload/v1773649822/Gemini_Generated_Image_3tot8d3tot8d3tot_ewjgdd.png)
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│  1. DATA ACCESS & KNOWLEDGE BASE                                    │
+│                                                                     │
+│  Salesforce CRM ──simple-salesforce──► Real-time CRM Connector      │
+│  (Leads, Opportunities, Account History)                            │
+│                                                                     │
+│  Product Knowledge Base (PDFs/Docs)                                 │
+│  → Document Ingestion & Embedding (all-MiniLM-L6-v2, local)        │
+│  → Vector Search via Supabase RPC (match_documents)                 │
+└───────────────────────────────┬─────────────────────────────────────┘
+                                │
+┌───────────────────────────────▼─────────────────────────────────────┐
+│  2. AI AGENT ORCHESTRATION                                          │
+│                                                                     │
+│  Agentic Core Engine (LangGraph + LangChain + FastAPI)              │
+│  ReAct Loop: Reason → Act → Observe → Reason...                     │
+│                                                                     │
+│  Agent Tools Registry:                                              │
+│  ├── CRM Tool      →  fetch leads from Salesforce                  │
+│  ├── RAG Tool      →  semantic search via Supabase RPC             │
+│  └── Proposal Tool →  generate proposal content                     │
+│                                                                     │
+│  Groq API (Llama 3.3 70B Versatile) →  contextual reasoning        │
+└───────────────────────────────┬─────────────────────────────────────┘
+                                │
+┌───────────────────────────────▼─────────────────────────────────────┐
+│  3. OUTPUT & ACTION                                                 │
+│                                                                     │
+│  Agent generates proposal data (JSON)                               │
+│  → PDF generation via FPDF2 (pdf_engine.py)                        │
+│  → PDF exported via POST /api/agent/export-pdf                     │
+│  → UI allows sales rep to review / edit draft                      │
+└─────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## 🖼️ Platform Preview
+## `$ cat frontend_backend_flow.txt`
 
-### 🌐 Landing Page
+```
+Frontend (Next.js 16 / React 19)
+  ├── Dashboard UI        →  Generate Proposal form
+  ├── Agent Status        →  live step indicators via SSE stream
+  │   Fetching CRM → Searching KB → Drafting PDF → Final Review
+  └── Auth               →  Salesforce OAuth callback
+                             tokens stored in localStorage
 
+        │ 1. HTTP Request (/api/agent, /api/batch, etc.)
+        ▼
+FastAPI App Gateway
+        │
+        ▼
+LangGraph Agent Orchestrator
+  ├── Fetch Lead Data       (CRM Tool → simple-salesforce)
+  ├── Search Product RAG    (RAG Tool → Supabase RPC match_documents)
+  ├── Validate Context
+  └── Generate PDF          (Proposal Tool → FPDF2 pdf_engine.py)
+        │
+        ▼
+Supabase PostgreSQL
+  ├── RAG Vectors (pgvector + match_documents RPC)
+  └── Document embeddings
+
+  Draft storage → in-memory dict (draft_storage = {})
+                  (Supabase persistence planned, not yet implemented)
+
+        │ SSE stream → agent step events only
+        ▼             PDF fetched separately via POST /api/agent/export-pdf
+Frontend receives result
+```
+
+---
+
+## `$ cat features.txt`
+
+### 🤖 ReAct Agent (LangGraph + LangChain)
+- **ReAct loop** — Reason, Act, Observe cycle until proposal is complete
+- Three registered tools: CRM Tool, RAG Tool, Proposal Tool
+- Agent decides which tools to call and in what order based on context
+- Groq API (Llama 3.3 70B Versatile) for all reasoning steps
+
+### 📡 Live Thought Console (SSE Streaming)
+- Every agent step streamed to the browser via Server-Sent Events
+- Step indicators: Fetching CRM → Searching KB → Drafting PDF → Final Review
+- Full agent observability — no black box
+
+### 🧠 RAG Knowledge Base
+- PDF/DOC ingestion with document chunking
+- Local embeddings via **all-MiniLM-L6-v2**
+- Vector search via **Supabase** (`documents` table + `match_documents` RPC)
+- Semantic retrieval at query time via RAG Tool
+
+### 🔗 Salesforce Integration
+- **simple-salesforce** Python library for CRM API calls
+- Fetches Leads, Opportunities, Account History
+- Salesforce OAuth 2.0 PKCE auth flow
+- Tokens stored in localStorage on frontend
+
+### 📄 PDF Proposal Generation
+- **FPDF2** (`backend/app/services/pdf_engine.py`)
+- PDF exported via `POST /api/agent/export-pdf`
+- UI allows sales rep to review and edit draft before use
+
+### 📦 Batch Processing
+- CSV upload for bulk lead imports
+- Mass proposal generation pipeline
+- Draft storage in-memory (`draft_storage = {}`) — Supabase persistence planned
+
+---
+
+## `$ cat stack.txt`
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│  BACKEND                                                        │
+│  FastAPI (Python 3.13+)    →  REST API + SSE streaming         │
+│  LangGraph + LangChain     →  ReAct agent orchestration        │
+│  Groq API / Llama 3.3 70B  →  contextual reasoning             │
+│  simple-salesforce         →  Salesforce CRM API client        │
+│  FPDF2                     →  PDF generation (pdf_engine.py)   │
+│  all-MiniLM-L6-v2 (local)  →  document embeddings             │
+│                                                                 │
+│  DATABASE                                                       │
+│  Supabase (Postgres+pgvector) → documents embeddings +          │
+│                                match_documents RPC only        │
+│  In-memory dict            →  draft storage (demo only)        │
+│                                                                 │
+│  AUTH                                                           │
+│  Salesforce OAuth 2.0 PKCE →  tokens in localStorage (frontend)│
+│                             +  in-memory token store (backend) │
+│                                                                 │
+│  STREAMING                                                      │
+│  Server-Sent Events (SSE)  →  live agent step observability    │
+│                                                                 │
+│  FRONTEND                                                       │
+│  Next.js 16 (React 19)     →  streaming UI                     │
+│  Redux Toolkit             →  state management                 │
+│  Tailwind CSS + shadcn/ui  →  components                       │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## `$ ls -la platform/`
+
+### Landing Page
 ![Landing Page](https://res.cloudinary.com/dqz5xgr5v/image/upload/v1773542387/Screenshot_2026-03-15_at_08.08.14_tpjxem.png)
 
-### 🔐 Sign In
-
+### Sign In
 ![Sign In](https://res.cloudinary.com/dqz5xgr5v/image/upload/v1773542389/Screenshot_2026-03-15_at_08.07.55_z8mdiq.png)
 
-### 🤖 Agent Dashboard
-
-> Real-time AI research, live streaming thought console, and proposal drafting with quality scoring.
+### Agent Dashboard
+> Real-time AI research, live SSE thought console, proposal drafting
 
 ![Dashboard](https://res.cloudinary.com/dqz5xgr5v/image/upload/v1773542386/Screenshot_2026-03-15_at_08.05.58_lhoclp.png)
 
-### 📊 Batch CSV Processing
-
-> Scale personalization across hundreds of leads simultaneously with bulk draft generation.
+### Batch CSV Processing
+> Scale personalization across hundreds of leads simultaneously
 
 ![Batch Processing](https://res.cloudinary.com/dqz5xgr5v/image/upload/v1773542387/Screenshot_2026-03-15_at_08.06.55_c7n1be.png)
 
-### 📝 All Drafts
-
-> Manage, review, and iterate on all generated proposals from a single view.
-
+### All Drafts
 ![All Drafts](https://res.cloudinary.com/dqz5xgr5v/image/upload/v1773542387/Screenshot_2026-03-15_at_08.07.14_cdu6pd.png)
 
-### 💬 AI Assistant
-
-> Conversational AI assistant for on-demand sales strategy, objection handling, and research.
-
+### AI Assistant
 ![AI Assistant](https://res.cloudinary.com/dqz5xgr5v/image/upload/v1773542387/Screenshot_2026-03-15_at_08.07.36_sn5qan.png)
 
 ---
 
-## 🎯 Core Features
+## `$ tree api/`
 
-### 🤖 Agentic Workflow (LangGraph)
-A four-node non-linear pipeline that automates the entire proposal lifecycle:
-```
-Discovery → Research → Draft → Score
-```
-- **Discovery Node** — Fetches live lead data from Salesforce CRM
-- **Research Node** — Performs semantic search across the private Knowledge Base
-- **Writer Node** — Generates hyper-personalized proposals using Llama 3.3 70B
-- **Scoring Agent** — Critiques every draft on a 1–100 scale across multiple quality dimensions
-
-### 📡 Live Thought Console
-Full, real-time observability into the AI's reasoning process via SSE streaming. Watch every step of the agent's workflow unfold live in the browser.
-
-### 📈 Proposal Quality Scoring
-- Multi-criteria evaluation: Personalization, Professionalism, Value Proposition, CTA strength
-- 1–100 quality score with color-coded visual indicators
-- Success probability prediction for conversion estimates
-- Automated AI insights with actionable improvement suggestions
-
-### 🧠 RAG Knowledge Base
-- PDF/DOC ingestion with intelligent chunking
-- Supabase `pgvector` embeddings for semantic search
-- File listing, metadata tracking, and bulk management
-- Private company docs stay private — fully self-hosted vector store
-
-### 🔗 Salesforce-Native Integration
-- OAuth 2.0 PKCE authentication flow
-- Real-time CRM data sync
-- Direct lead record access and management
-- Secure token storage and refresh handling
-
-### 📦 Batch Processing
-- CSV upload for bulk lead imports
-- Mass proposal generation with configurable pipelines
-- Advanced search and filter across all leads
-- Analytics dashboard with processing metrics
-
----
-
-## 🛠️ Tech Stack
-
-| Layer | Technologies |
-|---|---|
-| **Frontend** | Next.js 16 (React 19), Redux Toolkit, Tailwind CSS, Shadcn/ui, Lucide React |
-| **Backend** | FastAPI (Python), LangGraph, Groq API (Llama 3.3 70B) |
-| **Database** | Supabase (PostgreSQL + pgvector) |
-| **Auth** | Salesforce OAuth 2.0 PKCE |
-| **Streaming** | Server-Sent Events (SSE) |
-
----
-
-## 📁 Project Structure
-
-### Backend API
 ```
 /api/
-├── auth/          # OAuth flow & token management
+├── auth/          # Salesforce OAuth flow & token management
 ├── salesforce/    # Lead sync & CRM operations
-├── agent/         # AI agent streaming & workflow
-├── batch/         # Bulk lead processing
-├── drafts/        # Draft analysis & management
-├── kb/            # Knowledge base management
-└── agent-chat/    # AI assistant chat
+├── agent/         # LangGraph ReAct agent + SSE streaming
+├── batch/         # Bulk CSV lead processing pipeline
+├── drafts/        # Draft storage & management
+├── kb/            # Knowledge base — ingest, embed, search
+└── agent-chat/    # Conversational AI assistant
 ```
 
-### Frontend
 ```
-app/
+frontend/my-app/
 ├── (protected)/
-│   ├── dashboard/     # Main agent workspace
+│   ├── dashboard/     # Main agent workspace + thought console
 │   ├── agent/         # AI assistant chat
 │   ├── batch/         # Bulk operations
 │   ├── drafts/        # Draft management
@@ -137,72 +223,94 @@ app/
 ├── components/
 │   ├── dashboard/     # AIAgentChat, KnowledgeBase
 │   ├── batch/         # BatchModeDashboard
-│   └── ui/            # Reusable component library
+│   └── ui/            # shadcn component library
 └── store/
     └── features/      # Redux state slices
 ```
 
 ---
 
-## 🚀 Getting Started
+## `$ cat setup.txt`
 
 ### Prerequisites
-- Python 3.11+
-- Node.js 20+
-- Supabase project with `pgvector` enabled
-- Groq API key
-- Salesforce Connected App credentials
+```
+Python 3.13+
+Node.js 20+
+Supabase project (pgvector enabled)
+Groq API key
+Salesforce Connected App credentials
+```
 
-### Backend Setup
+### Backend
 ```bash
 cd backend
-uv init
-uv pip install -r requirements.txt
-
-# Configure environment
+uv sync   # installs from pyproject.toml + uv.lock
 cp .env.example .env
-# Add: GROQ_API_KEY, SUPABASE_URL, SUPABASE_KEY, SALESFORCE_CLIENT_ID, SALESFORCE_CLIENT_SECRET
-
 uv run uvicorn app.main:app --reload
+# API at http://localhost:8000
 ```
 
-### Frontend Setup
+### Frontend
 ```bash
-cd frontend
+cd frontend/my-app
 npm install
-
-# Configure environment
 cp .env.local.example .env.local
-# Add: NEXT_PUBLIC_API_URL
-
 npm run dev
+# App at http://localhost:3000
 ```
-
-The app will be available at `http://localhost:3000` with the API running at `http://localhost:8000`.
 
 ---
 
-## 🔧 Environment Variables
+## `$ cat .env.example`
 
-### Backend `.env`
+### Backend
 ```env
 GROQ_API_KEY=your_groq_api_key
 SUPABASE_URL=your_supabase_url
-SUPABASE_KEY=your_supabase_service_key
-SALESFORCE_CLIENT_ID=your_sf_client_id
-SALESFORCE_CLIENT_SECRET=your_sf_client_secret
-SALESFORCE_REDIRECT_URI=http://localhost:8000/api/auth/callback
+SUPABASE_SERVICE_KEY=your_supabase_service_key
+SF_CLIENT_ID=your_salesforce_client_id
+SF_CLIENT_SECRET=your_salesforce_client_secret
+SF_REDIRECT_URI=http://localhost:8000/api/auth/callback
 ```
 
-### Frontend `.env.local`
+### Frontend
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
 ```
 
 ---
 
-## 🏆 Built For
+## `$ cat limitations.txt`
 
-**NeuraX 2.0 — National Level Hackathon**
+```
+⚠  DEMO / HACKATHON BUILD — not production-hardened
 
-Developed with ❤️ by **Team Techies**
+In-memory storage:
+  draft_storage = {}     →  drafts lost on server restart
+  token store (backend)  →  Salesforce tokens not persisted
+
+Not implemented:
+  Email sending          →  no email service wired up
+  HITL approval workflow →  UI review only, no backend state machine
+  Draft persistence      →  Supabase drafts table planned, not built
+
+Security notes:
+  Salesforce tokens stored in localStorage (frontend)
+  Backend token store is in-memory (demo only)
+  Tokens passed as query params to some endpoints (avoid in production)
+  Rotate all API keys before any public deployment
+```
+
+**Future work:** persist drafts + tokens to Supabase, add email delivery via SendGrid/Resend, implement proper HITL approve/reject state in LangGraph.
+
+---
+
+<div align="center">
+
+```
+$ echo $BUILT_FOR
+  NeuraX 2.0 — National Level Hackathon
+  Team Techies · Built with ❤️
+```
+
+</div>
