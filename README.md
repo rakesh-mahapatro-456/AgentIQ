@@ -12,13 +12,13 @@
 
 > A bird's-eye view of the AgentIQ ecosystem — from frontend to backend services.
 
-![Project Architecture](https://res.cloudinary.com/dqz5xgr5v/image/upload/v1773477241/archit_yfa8zp.png)
+![Project Architecture](https://res.cloudinary.com/dqz5xgr5v/image/upload/v1773649822/Gemini_Generated_Image_10lau10lau10lau1_pbliy3.png)
 
 ### Frontend ↔ Backend Interaction
 
 > Detailed mapping of the Next.js to FastAPI communication flow, including SSE streaming, OAuth, and vector search.
 
-![Frontend-Backend Architecture](https://res.cloudinary.com/dqz5xgr5v/image/upload/v1773477240/archi2_sjvsit.png)
+![Frontend-Backend Architecture](https://res.cloudinary.com/dqz5xgr5v/image/upload/v1773649822/Gemini_Generated_Image_3tot8d3tot8d3tot_ewjgdd.png)
 
 ---
 
